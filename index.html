@@ -1,0 +1,111 @@
+<html>
+  <head> </head>
+  <body>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+    <h1>5HatTakip</h1>
+    <p id="ReferansNo"></p>
+    <p id="ReferansAdi"></p>
+    <p id="SayacL"></p>
+    <p id="KasaL"></p>
+    <p id="HurdaL"></p>
+    <p id="OncekiL"></p>
+    <p id="GunlukL"></p>
+    <p id="GeridelikL"></p>
+    <p id="Olesine"></p>
+
+    <script>
+      var RefNo,
+        Sayac,
+        KasaSet,
+        Kasa,
+        HurdaS,
+        OncekiSaat,
+        GunlukAdet,
+        Geridelik;
+      var FirBaseVeri, Deger;
+      var firebaseConfig = {
+        apiKey: "AIzaSyCPaBy5h-5ULxlTzxBRkPyHxx04ijYuaBY",
+        authDomain: "sayac-b3007.firebaseapp.com",
+        databaseURL: "https://sayac-b3007.firebaseio.com",
+        projectId: "sayac-b3007",
+        storageBucket: "sayac-b3007.appspot.com",
+        messagingSenderId: "530443759936",
+        appId: "1:530443759936:web:8bc993778d638219a30aa5"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      function Ready(f) {
+        firebase
+          .database()
+          .ref("5HatTakip/" + f)
+          .on("value", function(sanpshot) {
+            var metin2 = sanpshot.val();
+            Deger = metin2.slice(
+              metin2.indexOf("~1") + 2,
+              metin2.indexOf("~2")
+            );
+          });
+      }
+
+      firebase
+        .database()
+        .ref("5HatTakip")
+        .on("value", function(sanpshot) {
+          var metin = sanpshot.val().Panel;
+
+          RefNo = metin.slice(0, metin.indexOf("~"));
+          FireBaseVeri = "Referans/" + RefNo;
+          document.getElementById("ReferansNo").innerHTML =
+            "ReferansNo: " + RefNo;
+          Sayac = metin.slice(metin.indexOf("~1") + 2, metin.indexOf("~2"));
+          KasaSet = metin.slice(metin.indexOf("~2") + 2, metin.indexOf("~3"));
+          Kasa = metin.slice(metin.indexOf("~3") + 2, metin.indexOf("~4"));
+          HurdaS = metin.slice(metin.indexOf("~4") + 2, metin.indexOf("~5"));
+          OncekiSaat = metin.slice(
+            metin.indexOf("~6") + 2,
+            metin.indexOf("~7")
+          );
+          GunlukAdet = metin.slice(
+            metin.indexOf("~7") + 2,
+            metin.indexOf("~8")
+          );
+          Geridelik = metin.slice(
+            metin.indexOf("~*3") + 3,
+            metin.indexOf("~*4")
+          );
+
+          document.getElementById("SayacL").innerHTML = "Sayac: " + Sayac;
+          document.getElementById("KasaL").innerHTML =
+            "Kasa: " + KasaSet + "/" + Kasa;
+          document.getElementById("HurdaL").innerHTML = "Hurda: " + HurdaS;
+          document.getElementById("OncekiL").innerHTML =
+            "OncekiSaat: " + OncekiSaat;
+          document.getElementById("GunlukL").innerHTML =
+            "GunlukAdet: " + GunlukAdet;
+          Ready(FireBaseVeri);
+          document.getElementById("ReferansAdi").innerHTML =
+            "ReferansAdi: " + Deger;
+          document.getElementById("GeridelikL").innerHTML =
+            "Geridelik: " + Geridelik;
+        });
+
+    function httpResponse ()
+{
+  // Bir aqHttpRequest nesnesi oluşturun
+  // İstek gönderin, aqHttpResponse nesnesi alın
+  
+  // Yanıt verisini okuyun
+  Log.Message (aqHttpResponse.AllHeaders); // Tüm üstbilgiler
+  Log.Message (aqHttpResponse.GetHeader ("Content-Type")); // Belirli bir başlık
+  Log.Message (aqHttpResponse.StatusCode); // Bir durum kodu
+  Log.Message (aqHttpResponse.StatusText); // Bir durum metni
+  Log.Message (aqHttpResponse.Text); // Bir yanıt gövdesi
+  
+  // Bir yanıt gövdesini
+  aqHttpResponse.SaveToFile //dosyasına kaydedin ("C: \\ Work \\ body.txt");
+}
+    </script>
+  </body>
+</html>
